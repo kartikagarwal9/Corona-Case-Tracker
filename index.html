@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script>L_PREFER_CANVAS=false; L_NO_TOUCH=false; L_DISABLE_3D=false;</script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.4.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.4.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://rawcdn.githack.com/python-visualization/folium/master/folium/templates/leaflet.awesome.rotate.css"/>
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    
+    <meta name="viewport" content="width=device-width,
+        initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <style>#map_750562447c2149d7a0fc2231ddd22c4c {
+        position: relative;
+        width: 800.0px;
+        height: 500.0px;
+        left: 8.0%;
+        top: 2.0%;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-minimap/3.6.1/Control.MiniMap.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-minimap/3.6.1/Control.MiniMap.css"/>
+    
+                <style>
+                    #scroll_zoom_toggler_f468508ad57d4d2790ff982b18fcc670 {
+                        position:absolute;
+                        width:35px;
+                        bottom:10px;
+                        height:35px;
+                        left:10px;
+                        background-color:#fff;
+                        text-align:center;
+                        line-height:35px;
+                        vertical-align: middle;
+                        }
+                </style>
+            
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.fullscreen/1.4.2/Control.FullScreen.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.fullscreen/1.4.2/Control.FullScreen.min.css"/>
+</head>
+<body>    
+    
+        <h2 align="center" style="font-size:20px"><b>Coronavirus Total Confirmed Cases in World</b></h2>
+        <h4 align="center" style="font-size:16px"><i>Created by</i> KARTIK AGARWAL</h4>
+        <h4 align="center" style="font-size:16px"><i>Powered by</i>
+            <a href="https://www.whitehatjr.com/">WhiteHat Jr</a>
+        </h4>
+             
+    
+    <div class="folium-map" id="map_750562447c2149d7a0fc2231ddd22c4c" ></div>
+    
+            <img id="scroll_zoom_toggler_f468508ad57d4d2790ff982b18fcc670" alt="scroll"
+                 src="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/png/512/arrow-move.png"
+                 style="z-index: 999999"
+                 onclick="map_750562447c2149d7a0fc2231ddd22c4c.toggleScroll()">
+            </img>
+            
+</body>
+<script>    
+    
+    
+        var bounds = null;
+    
+
+    var map_750562447c2149d7a0fc2231ddd22c4c = L.map(
+        'map_750562447c2149d7a0fc2231ddd22c4c', {
+        center: [0, 0],
+        zoom: 4,
+        maxBounds: bounds,
+        layers: [],
+        worldCopyJump: false,
+        crs: L.CRS.EPSG3857,
+        zoomControl: true,
+        });
+
+
+    
+    var tile_layer_8bdfa9b7af3b4851a8eef436a3f4b3e3 = L.tileLayer(
+        'https://stamen-tiles-{s}.a.ssl.fastly.net/terrain/{z}/{x}/{y}.jpg',
+        {
+        "attribution": null,
+        "detectRetina": false,
+        "maxNativeZoom": 18,
+        "maxZoom": 18,
+        "minZoom": 0,
+        "noWrap": false,
+        "opacity": 1,
+        "subdomains": "abc",
+        "tms": false
+}).addTo(map_750562447c2149d7a0fc2231ddd22c4c);
+    
+
+        var tile_layer_99ba2f307b774ac9b9c9abe75a52cb1e = L.tileLayer(
+        'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        {
+        "attribution": null,
+        "detectRetina": false,
+        "maxNativeZoom": 18,
+        "maxZoom": 18,
+        "minZoom": 0,
+        "noWrap": false,
+        "opacity": 1,
+        "subdomains": "abc",
+        "tms": false
+} );
+
+        var mini_map_391c790f464f4b52aef9207a8a0b5100 = new L.Control.MiniMap( tile_layer_99ba2f307b774ac9b9c9abe75a52cb1e,
+         {
+  "autoToggleDisplay": false,
+  "centerFixed": false,
+  "collapsedHeight": 25,
+  "collapsedWidth": 25,
+  "height": 150,
+  "minimized": false,
+  "position": "bottomright",
+  "toggleDisplay": true,
+  "width": 150,
+  "zoomAnimation": false,
+  "zoomLevelFixed": null,
+  "zoomLevelOffset": -5
+});
+        map_750562447c2149d7a0fc2231ddd22c4c.addControl(mini_map_391c790f464f4b52aef9207a8a0b5100);
+
+        
+    
+                    map_750562447c2149d7a0fc2231ddd22c4c.scrollEnabled = true;
+
+                    map_750562447c2149d7a0fc2231ddd22c4c.toggleScroll = function() {
+                        if (this.scrollEnabled) {
+                            this.scrollEnabled = false;
+                            this.scrollWheelZoom.disable();
+                            }
+                        else {
+                            this.scrollEnabled = true;
+                            this.scrollWheelZoom.enable();
+                            }
+                        };
+
+                    map_750562447c2149d7a0fc2231ddd22c4c.toggleScroll();
+            
+    
+            L.control.fullscreen({
+                position: 'topright',
+                title: 'Full Screen',
+                titleCancel: 'Exit Full Screen',
+                forceSeparateButton: false,
+                }).addTo(map_750562447c2149d7a0fc2231ddd22c4c);
+            map_750562447c2149d7a0fc2231ddd22c4c.on('enterFullscreen', function(){
+                console.log('entered fullscreen');
+            });
+
+        
+    
+
+            var circle_5d908d1a81304bf69d41dabb4b8eb2dd = L.circle(
+                [33.93911, 67.709953],
+                {
+  "bubblingMouseEvents": true,
+  "color": "red",
+  "dashArray": null,
+  "dashOffset": null,
+  "fill": true,
+  "fillColor": "red",
+  "fillOpacity": 0.2,
+  "fillRule": "evenodd",
+  "lineCap": "round",
+  "lineJoin": "round",
+  "opacity": 1.0,
+  "radius": 19035.0,
+  "stroke": true,
+  "weight": 3
+}
+                )
+                .addTo(map_750562447c2149d7a0fc2231ddd22c4c);
+            
+    
+            var popup_96703f0e5889458b94b08f8774275217 = L.popup({maxWidth: '100%'
+            
+            });
+
+            
+                var html_15db59917ba5446ea9b946e1a4172996 = $(`<div id="html_15db59917ba5446ea9b946e1a4172996" style="width: 100.0%; height: 100.0%;">Afghanistan  38070  on 8/25/20</div>`)[0];
+                popup_96703f0e5889458b94b08f8774275217.setContent(html_15db59917ba5446ea9b946e1a4172996);
+            
+
+            circle_5d908d1a81304bf69d41dabb4b8eb2dd.bindPopup(popup_96703f0e5889458b94b08f8774275217)
+            ;
+
+            
+        
+    
+
+            var circle_b3d0216996514efeb8f542ba9518ff97 = L.circle(
+                [41.1533, 20.1683],
+                {
+  "bubblingMouseEvents": true,
+  "color": "red",
+  "dashArray": null,
+  "dashOffset": null,
+  "fill": true,
+  "fillColor": "red",
+  "fillOpacity": 0.2,
+  "fillRule": "evenodd",
+  "lineCap": "round",
+  "lineJoin": "round",
+  "opacity": 1.0,
+  "radius": 4379.5,
+  "stroke": true,
+  "weight": 3
+}
+                )
+                .addTo(map_750562447c2149d7a0fc2231ddd22c4c);
+            
+    
+            var popup_75b5c00f88264138b820b77938eb90df = L.popup({maxWidth: '100%'
+            
+            });
+
+            
+                var html_934b4b9736004cc0bf77f3b91939fa87 = $(`<div id="html_934b4b9736004cc0bf77f3b91939fa87" style="width: 100.0%; height: 100.0%;">Albania  8759  on 8/25/20</div>`)[0];
+                popup_75b5c00f88264138b820b77938eb90df.setContent(html_934b4b9736004cc0bf77f3b91939fa87);
+            
+
+            circle_b3d0216996514efeb8f542ba9518ff97.bindPopup(popup_75b5c00f88264138b820b77938eb90df)
+            ;
+
+            
+        
+    
+
+            var circle_0a4b707062e2447590bf2a9d040fdd76 = L.circle(
+                [28.0339, 1.6596],
+                {
+  "bubblingMouseEvents": true,
+  "color": "red",
+  "dashArray": null,
+  "dashOffset": null,
+  "fill": true,
+  "fillColor": "red",
+  "fillOpacity": 0.2,
+  "fillRule": "evenodd",
+  "lineCap": "round",
+  "lineJoin": "round",
+  "opacity": 1.0,
+  "radius": 21114.0,
+  "stroke": true,
+  "weight": 3
+}
+                )
+                .addTo(map_750562447c2149d7a0fc2231ddd22c4c);
+            
+    
+            var popup_835b477610ff49a390dd9717991ab0bf = L.popup({maxWidth: '100%'
+            
+            });
+
+            
+                var html_fdb1dbc02f4a478584c9dfcde5143d12 = $(`<div id="html_fdb1dbc02f4a478584c9dfcde5143d12" style="width: 100.0%; height: 100.0%;">Algeria  42228  on 8/25/20</div>`)[0];
+                popup_835b477610ff49a390dd9717991ab0bf.setContent(html_fdb1dbc02f4a478584c9dfcde5143d12);
+            
+
+            circle_0a4b707062e2447590bf2a9d040fdd76.bindPopup(popup_835b477610ff49a390dd9717991ab0bf)
+            ;
+
+            
+        
+    
+
+            var circle_59aa647264614febab71ba33a96fe536 = L.circle(
+                [42.5063, 1.5218],
+                {
+  "bubblingMouseEvents": true,
+  "color": "red",
+  "dashArray": null,
+  "dashOffset": null,
+  "fill": true,
+  "fillColor": "red",
+  "fillOpacity": 0.2,
+  "fillRule": "evenodd",
+  "lineCap": "round",
+  "lineJoin": "round",
+  "opacity": 1.0,
+  "radius": 530.0,
+  "stroke": true,
+  "weight": 3
+}
+                )
+                .addTo(map_750562447c2149d7a0fc2231ddd22c4c);
+            
+    
+            var popup_2b42e38e822445e392bdea43766aed3b = L.popup({maxWidth: '100%'
+            
+            });
+
+            
+                var html_880f9b36279d4d819895743a15aaa0e4 = $(`<div id="html_880f9b36279d4d819895743a15aaa0e4" style="width: 100.0%; height: 100.0%;">Andorra  1060  on 8/25/20</div>`)[0];
+                popup_2b42e38e822445e392bdea43766aed3b.setContent(html_880f9b36279d4d819895743a15aaa0e4);
+            
+
+            circle_59aa647264614febab71ba33a96fe536.bindPopup(popup_2b42e38e822445e392bdea43766aed3b)
+            ;
+
+            
+        
+    
+
+            var circle_cb82364d5f5e4592bc18eaf61d3d2776 = L.circle(
+                [-11.2027, 17.8739],
+                {
+  "bubblingMouseEvents": true,
+  "color": "red",
+  "dashArray": null,
+  "dashOffset": null,
+  "fill": true,
+  "fillColor": "red",
+  "fillOpacity": 0.2,
+  "fillRule": "evenodd",
+  "lineCap": "round",
+  "lineJoin": "round",
+  "opacity": 1.0,
+  "radius": 1141.5,
+  "stroke": true,
+  "weight": 3
+}
+                )
+                .addTo(map_750562447c2149d7a0fc2231ddd22c4c);
+            
+    
+            var popup_07bd284c68824f978b76f6ec035c3830 = L.popup({maxWidth: '100%'
+            
+            });
+
+            
+                var html_bb6b802457a64ae0a42f5e5de26d788c = $(`<div id="html_bb6b802457a64ae0a42f5e5de26d788c" style="width: 100.0%; height: 100.0%;">Angola  2283  on 8/25/20</div>`)[0];
+                popup_07bd284c68824f978b76f6ec035c3830.setContent(html_bb6b802457a64ae0a42f5e5de26d788c);
+            
+
+            circle_cb82364d5f5e4592bc18eaf61d3d2776.bindPopup(popup_07bd284c68824f978b76f6ec035c3830)
+            ;
+
+            
+        
+    
+
+            var circle_8cdbe91f002343178c048029e0a9adf7 = L.circle(
+                [17.0608, -61.7964],
+                {
+  "bubblingMouseEvents": true,
+  "color": "red",
+  "dashArray": null,
+  "dashOffset": null,
+  "fill": true,
+  "fillColor": "red",
+  "fillOpacity": 0.2,
+  "fillRule": "evenodd",
+  "lineCap": "round",
+  "lineJoin": "round",
+  "opacity": 1.0,
+  "radius": 47.0,
+  "stroke": true,
+  "weight": 3
+}
+                )
+                .addTo(map_750562447c2149d7a0fc2231ddd22c4c);
+            
+    
+            var popup_68119e75458f4057b348d5211387ebc9 = L.popup({maxWidth: '100%'
+            
+            });
+
+            
+                var html_6eacb3f98b254430a8170f286612ce29 = $(`<div id="html_6eacb3f98b254430a8170f286612ce29" style="width: 100.0%; height: 100.0%;">Antigua and Barbuda  94  on 8/25/20</div>`)[0];
+                popup_68119e75458f4057b348d5211387ebc9.setContent(html_6eacb3f98b254430a8170f286612ce29);
+            
+
+            circle_8cdbe91f002343178c048029e0a9adf7.bindPopup(popup_68119e75458f4057b348d5211387ebc9)
+            ;
+
+            
+        
+    
+
+            var circle_d30d3fdd3ae34b81809642c562b21031 = L.circle(
+                [-38.4161, -63.6167],
+                {
+  "bubblingMouseEvents": true,
+  "color": "red",
+  "dashArray": null,
+  "dashOffset": null,
+  "fill": true,
+  "fillColor": "red",
+  "fillOpacity": 0.2,
+  "fillRule": "evenodd",
+  "lineCap": "round",
+  "lineJoin": "round",
+  "opacity": 1.0,
+  "radius": 179819.0,
+  "stroke": true,
+  "weight": 3
+}
+                )
+                .addTo(map_750562447c2149d7a0fc2231ddd22c4c);
+            
+    
+            var popup_ad504ae02f1b4d5da5c6df8bfd35aa5a = L.popup({maxWidth: '100%'
+            
+            });
+
+            
+                var html_e68406d246c840b1954f68be3264b8a9 = $(`<div id="html_e68406d246c840b1954f68be3264b8a9" style="width: 100.0%; height: 100.0%;">Argentina  359638  on 8/25/20</div>`)[0];
+                popup_ad504ae02f1b4d5da5c6df8bfd35aa5a.setContent(html_e68406d246c840b1954f68be3264b8a9);
+            
+
+            circle_d30d3fdd3ae34b81809642c562b21031.bindPopup(popup_ad504ae02f1b4d5da5c6df8bfd35aa5a)
+            ;
+
+            
+        
+    
+
+            var circle_fee0c122688b4ba8aa7147cad47018f0 = L.circle(
+                [40.0691, 45.0382],
+                {
+  "bubblingMouseEvents": true,
+  "color": "red",
+  "dashArray": null,
+  "dashOffset": null,
+  "fill": true,
+  "fillColor": "red",
+  "fillOpacity": 0.2,
+  "fillRule": "evenodd",
+  "lineCap": "round",
+  "lineJoin": "round",
+  "opacity": 1.0,
+  "radius": 21468.0,
+  "stroke": true,
+  "weight": 3
+}
+                )
+                .addTo(map_750562447c2149d7a0fc2231ddd22c4c);
+            
+    
+            var popup_a19437ebe8544a27a48572a29caf6558 = L.popup({maxWidth: '100%'
+            
+            });
+
+            
+                var html_ff04b5fef91e437a8a952393aab4acc7 = $(`<div id="html_ff04b5fef91e437a8a952393aab4acc7" style="width: 100.0%; height: 100.0%;">Armenia  42936  on 8/25/20</div>`)[0];
+                popup_a19437ebe8544a27a48572a29caf6558.setContent(html_ff04b5fef91e437a8a952393aab4acc7);
+            
+
+            circle_fee0c122688b4ba8aa7147cad47018f0.bindPopup(popup_a19437ebe8544a27a48572a29caf6558)
+            ;
+
+            
+        
+    
+
+            var circle_9a3fac6bb7724e13aee0eeef9d2d1ffd = L.circle(
+                [-256.85020000000003, 1130.8438999999998],
+                {
+  "bubblingMouseEvents": true,
+  "color": "red",
+  "dashArray": null,
+  "dashOffset": null,
+  "fill": true,
+  "fillColor": "red",
+  "fillOpacity": 0.2,
+  "fillRule": "evenodd",
+  "lineCap": "round",
+  "lineJoin": "round",
+  "opacity": 1.0,
+  "radius": 12602.0,
+  "stroke": true,
+  "weight": 3
+}
+                )
+                .addTo(map_750562447c2149d7a0fc2231ddd22c4c);
+            
+    
+            var popup_6b5771e9e2a14074810b696d1e46a7a0 = L.popup({maxWidth: '100%'
+            
+            });
+
+            
+                var html_d72c51d5a91c496ba5f4faf07aeeec63 = $(`<div id="html_d72c51d5a91c496ba5f4faf07aeeec63" style="width: 100.0%; height: 100.0%;">Australia  25204  on 8/25/20</div>`)[0];
+                popup_6b5771e9e2a14074810b696d1e46a7a0.setContent(html_d72c51d5a91c496ba5f4faf07aeeec63);
+            
+
+            circle_9a3fac6bb7724e13aee0eeef9d2d1ffd.bindPopup(popup_6b5771e9e2a14074810b696d1e46a7a0)
+            ;
+
+            
+        
+    
+
+            var circle_6237d8f7321949708dca5fdccd7d0ee4 = L.circle(
+                [47.5162, 14.5501],
+                {
+  "bubblingMouseEvents": true,
+  "color": "red",
+  "dashArray": null,
+  "dashOffset": null,
+  "fill": true,
+  "fillColor": "red",
+  "fillOpacity": 0.2,
+  "fillRule": "evenodd",
+  "lineCap": "round",
+  "lineJoin": "round",
+  "opacity": 1.0,
+  "radius": 12853.0,
+  "stroke": true,
+  "weight": 3
+}
+                )
+                .addTo(map_750562447c2149d7a0fc2231ddd22c4c);
+            
+    
+            var popup_cb8423c5a6d74d90bd36f66df48e9230 = L.popup({maxWidth: '100%'
+            
+            });
+
+            
+                var html_e31350abd3164664bd4efada70f2b0d6 = $(`<div id="html_e31350abd3164664bd4efada70f2b0d6" style="width: 100.0%; height: 100.0%;">Austria  25706  on 8/25/20</div>`)[0];
+                popup_cb8423c5a6d74d90bd36f66df48e9230.setContent(html_e31350abd3164664bd4efada70f2b0d6);
+            
+
+            circle_6237d8f7321949708dca5fdccd7d0ee4.bindPopup(popup_cb8423c5a6d74d90bd36f66df48e9230)
+            ;
+
+            
+        
+    
+
+            var circle_e21be324cefe4ce68094920d302fbb04 = L.circle(
+                [40.1431, 47.5769],
+                {
+  "bubblingMouseEvents": true,
+  "color": "red",
+  "dashArray": null,
+  "dashOffset": null,
+  "fill": true,
+  "fillColor": "red",
+  "fillOpacity": 0.2,
+  "fillRule": "evenodd",
+  "lineCap": "round",
+  "lineJoin": "round",
+  "opacity": 1.0,
+  "radius": 17779.5,
+  "stroke": true,
+  "weight": 3
